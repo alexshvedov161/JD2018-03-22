@@ -1,0 +1,11 @@
+<!ELEMENT Persons (Person)+>
+<!ELEMENT Person (Email,Nickname,Password,Ads)>
+ <!ELEMENT Email (#PCDATA)>
+<!ELEMENT Nickname (#PCDATA)>
+<!ELEMENT Password (#PCDATA)>
+<!ELEMENT Ads (Ad)+)>
+<!ELEMENT Ad (Description,Genre,Author,Released)>
+<!ELEMENT Description (#PCDATA)>
+<!ELEMENT Genre (#PCDATA)>
+<!ELEMENT Author (#PCDATA)>
+<!ELEMENT Released (#PCDATA)>

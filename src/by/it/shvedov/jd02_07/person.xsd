@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+        targetNamespace="http://shedov.it/xml/person"
+        xmlns:tns="http://shedov.it/xml/person"
+        elementFormDefault="qualified">
+    <element name="Persons">
+     <complexType>
+         <sequence>
+             <element name="Person"
+                      type="tns:Person"
+                      maxOccurs="unbounded">
+             </element>
+         </sequence>
+     </complexType>
+
+</element>
+    <complexType name="Person">
+        <sequence>
+            <element name="Email" type="string"/>
+            <element name="Nickname" type="string"/>
+            <element name="Password" type="string"/>
+            <element name="Ads" type="tns:Ads"
+                     maxOccurs="unbounded" />
+
+        </sequence>
+    </complexType>
+<complexType name="Ads">
+    <sequence>
+        <element name="Ad" type="tns:Ad"
+                 maxOccurs="unbounded">
+
+        </element>
+    </sequence>
+</complexType>
+  <complexType name="Ad">
+   <all>
+       <element name="Description" type="string"/>
+       <element name="Genre" type="string"/>
+       <element name="Author" type="string"/>
+       <element name="Released" type="positiveInteger"/>
+   </all>
+  </complexType>
+</schema>
+
+
+

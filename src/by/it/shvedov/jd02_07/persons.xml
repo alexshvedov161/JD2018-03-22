@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Persons>
+    <Person>
+    <Email>cloud@mail.ru</Email>
+   <Nickname>cloud</Nickname>
+    <Password>12345</Password>
+    <Ads>
+        <Ad>
+            <Description>451 градус по Фаренгейту</Description>
+            <Genre>научно-фантастический роман-антиутопия</Genre>
+           <Author>Рэя Брэдбери</Author>
+            <Released>1953</Released>
+        </Ad>
+        <Ad>
+            <Description>Три мушкетёра</Description>
+            <Genre> историко-приключенческий роман</Genre>
+            <Author>Александр Дюма</Author>
+            <Released>1844</Released>
+        </Ad>
+    </Ads>
+    </Person>
+</Persons>
