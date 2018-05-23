@@ -7,6 +7,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 class Parser {
+    //Logger logger = Logger.getLogger();
     List<String> priority =
             new ArrayList<>(Arrays.asList("=", "+", "-", "*", "/"));
 
@@ -75,6 +76,8 @@ class Parser {
             case "/":
                 return one.div(two);
         }
-        throw new CalcException("Нет такой операции");
+        //throw new CalcException("Нет такой операции");
+        //logger.toLog(Errors.NO_OPERATION.toString());
+        throw new CalcException(Errors.NO_OPERATION.toString());
     }
 }

@@ -1,6 +1,8 @@
 package by.it.danilevich.calc;
 
 
+import java.io.IOException;
+
 public class Matrix extends Var {
     private double[][] value;
     Matrix(double[ ][ ]  value){
@@ -59,50 +61,77 @@ public class Matrix extends Var {
     }
 
     @Override
-    public Var mul(Var other) throws CallException {
+    public Var mul(Var other) throws CallException, IOException {
         if (other instanceof Matrix){
-            if (!checkMatrixForMult(this.value,((Matrix) other).value)) throw new CallException("Размеры матриц не подходят для умножения");
+            if (!checkMatrixForMult(this.value,((Matrix) other).value)){
+                Util.putToFileUserAction(this+"*"+other,Util.getError(Err.differentSizeMatrix4Mult),true);
+                throw new CallException(Util.getError(Err.differentSizeMatrix4Mult));
+            }
             double[][] rez = ActionMatrix.mul( this.value, ((Matrix) other).value);
+            Util.putToFileUserAction(this+"*"+other,rez.toString(),false);
             return  (new Matrix(rez));
         }
         else if (other instanceof Vector){
-            if (!checkMatrixVectorForMult(this.value,((Vector) other).getValue())) throw new CallException("Размеры матриц и вектора не подходят для умножения");
+            if (!checkMatrixVectorForMult(this.value,((Vector) other).getValue())){
+                Util.putToFileUserAction(this+"*"+other,Util.getError(Err.differentSizeMatrixVector4Mult),false);
+                throw new CallException(Util.getError(Err.differentSizeMatrixVector4Mult));
+            }
 
             double[] rez = ActionMatrix.mul( this.value, ((Vector) other).getValue());
+            Util.putToFileUserAction(this+"*"+other,rez.toString(),false);
             return  (new Vector(rez));
         }
         else if (other instanceof Scalar){
             double[][] rez = ActionMatrix.mul( ((Scalar) other).getValue(),this.value);
+            Util.putToFileUserAction(this+"*"+other,rez.toString(),false);
             return  (new Matrix(rez));
         }
-        else return other.mul(this);
+        else {
+              return other.mul(this);
+        }
     }
 
     @Override
-    public Var add(Var other) throws CallException {
+    public Var add(Var other) throws CallException, IOException {
         if (other instanceof Matrix){
-            if (!compareMatrix(this.value,((Matrix) other).value)) throw new CallException("Размеры матриц не подходят для сложения");
+            if (!compareMatrix(this.value,((Matrix) other).value)){
+                Util.putToFileUserAction(this+"+"+other,Util.getError(Err.addimpossible),true);
+                throw new CallException(Util.getError(Err.addimpossible));
+            }
 
             double[][] rez = ActionMatrix.add(this.value, ((Matrix) other).value);
+            Util.putToFileUserAction(this+"+"+other,String.valueOf(rez),false);
+
             return (new Matrix(rez));
         }
         else if (other instanceof Scalar){
             double[][] rez = ActionMatrix.add(this.value, ((Scalar) other).getValue());
+            Util.putToFileUserAction(this+"+"+other,String.valueOf(rez),false);
             return (new Matrix(rez));
         }
-        else throw new CallException("Сложение невозможно");
+        else{
+            Util.putToFileUserAction(this+"+"+other,Util.getError(Err.addimpossible),true);
+            throw new
+                    CallException(Util.getError(Err.addimpossible));
+        }
 
     }
 
     @Override
-    public Var sub(Var other) throws CallException {
+    public Var sub(Var other) throws CallException, IOException {
         if (other instanceof Matrix){
-            if (!checkMatrixForMult(this.value,((Matrix) other).value)) throw new CallException("Размеры матриц не подходят для вычитания");
+            if (!checkMatrixForMult(this.value,((Matrix) other).value)){
+                Util.putToFileUserAction(this+"-"+other,Util.getError(Err.differentSizeMatrixVector4Sub),false);
+
+                throw new CallException(Util.getError(Err.differentSizeMatrixVector4Sub));
+            }
             double[][] rez = ActionMatrix.sub(this.value, ((Matrix) other).value);
-            return (new Matrix(rez));
+            Util.putToFileUserAction(this+"-"+other,Util.getError(Err.differentSizeMatrixVector4Sub),true);
+           return (new Matrix(rez));
         }
         else if (other instanceof Scalar){
             double[][] rez = ActionMatrix.sub(this.value, ((Scalar) other).getValue());
+            Util.putToFileUserAction(this+"-"+other,String.valueOf(rez),false);
             return (new Matrix(rez));
         }
         else return other.mul(this);
@@ -111,23 +140,19 @@ public class Matrix extends Var {
     private static boolean checkMatrixForMult(double[][] matrixLeft, double[][] matrixRight){
         //count column in Matrix1== count line in Matrix2
         if (matrixLeft.length!=0 &&matrixRight.length!=0){
-            if (matrixLeft[0].length==matrixRight.length) {
-                return true;
-            }
-            else System.out.println("Count of column matrix left not equal count of line matrix right");
+            return matrixLeft[0].length == matrixRight.length;
+            //else System.out.println("Count of column matrix left not equal count of line matrix right");
         }
-        else  System.out.println("Empty matrix!");
+        //else  System.out.println("Empty matrix!");
         return false;
     }
     private static boolean checkMatrixVectorForMult(double[][] matrixLeft, double[] vector){
         //count column in Matrix1== count line in Matrix2
         if (matrixLeft.length!=0 &&vector.length!=0){
-            if (matrixLeft[0].length==vector.length) {
-                return true;
-            }
-            else System.out.println("Count of column matrix left not equal count of line matrix right");
+            return matrixLeft[0].length == vector.length;
+            //else System.out.println("Count of column matrix left not equal count of line matrix right");
         }
-        else  System.out.println("Empty matrix!");
+        //else  System.out.println("Empty matrix!");
         return false;
 
     }
@@ -135,10 +160,9 @@ public class Matrix extends Var {
     private static boolean compareMatrix(double[][] matrixLeft, double[][] matrixRight) {
         //count column in Matrix1== count line in Matrix2
         if (matrixLeft.length != 0 && matrixRight.length != 0) {
-            if (matrixLeft[0].length == matrixRight[0].length) {
-                return true;
-            } else System.out.println("Count of column matrix left not equal count of line matrix right");
-        } else System.out.println("Empty matrix!");
+            return matrixLeft[0].length == matrixRight[0].length;
+            //else System.out.println("Count of column matrix left not equal count of line matrix right");
+        } ///else System.out.println("Empty matrix!");
         return false;
     }
 }
