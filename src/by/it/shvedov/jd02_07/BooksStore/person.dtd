@@ -1,0 +1,11 @@
+<!ELEMENT Persons (Person)+>
+<!ELEMENT Person (Email,Nickname,Password,Descriptions)>
+ <!ELEMENT Email (#PCDATA)>
+<!ELEMENT Nickname (#PCDATA)>
+<!ELEMENT Password (#PCDATA)>
+<!ELEMENT Descriptions (Description)+)>
+<!ELEMENT Description (Name,Genre,Author,Released)>
+<!ELEMENT Name (#PCDATA)>
+<!ELEMENT Genre (#PCDATA)>
+<!ELEMENT Author (#PCDATA)>
+<!ELEMENT Released (#PCDATA)>

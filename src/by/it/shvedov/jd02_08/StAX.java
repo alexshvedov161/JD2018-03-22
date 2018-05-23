@@ -23,7 +23,7 @@ public class StAX {
                 switch(type){
                     case XMLStreamConstants.START_ELEMENT:
                     {
-                        System.out.println(tab+"["+reader.getLocalName()+"]");
+                        System.out.println(tab+"<"+reader.getLocalName()+">");
                         tab=tab+"\t";
                         break;
                     }
@@ -32,7 +32,7 @@ public class StAX {
                            System.out.println(tab+el);
                        tab=tab.substring(1);
                        el="";
-                        System.out.println(tab+"[/"+reader.getLocalName()+"]");
+                        System.out.println(tab+"</"+reader.getLocalName()+">");
                         break;
                     }
                     case XMLStreamConstants.CHARACTERS:
